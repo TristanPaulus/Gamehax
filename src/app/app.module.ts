@@ -7,6 +7,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WordraceComponent } from 'src/components/wordrace/wordrace.components';
+import { HttpClientModule } from '@angular/common/http';
+import * as $ from "jquery";
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { WordraceComponent } from 'src/components/wordrace/wordrace.components';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule
   ],

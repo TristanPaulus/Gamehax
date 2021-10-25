@@ -1,4 +1,41 @@
 
 <br/>
-<br/><br/><br/><br/><br/>
-<p>This is a test</p>
+<br/>
+<br/>
+<p>WordRace</p>
+
+
+<div style="align-items: center;">
+<table class="table" style="width:80%;text-align:center;max-width:450px;">
+    <tbody>
+      <tr>
+        <td><input type="text" maxlength="1" class="form-control" id="0" [(value)]="this.letters[0]"></td>
+        <td><input type="text" maxlength="1" class="form-control" id="1" [(value)]="this.letters[1]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="2" [(value)]="this.letters[2]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="3" [(value)]="this.letters[3]" ></td>
+      </tr>
+      <tr>
+        <td><input type="text" maxlength="1" class="form-control" id="4" [(value)]="letters[4]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="5" [(value)]="letters[5]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="6" [(value)]="letters[6]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="7" [(value)]="letters[7]" ></td>
+      </tr>
+      <tr>
+        <td><input type="text" maxlength="1" class="form-control" id="8" [(value)]="letters[8]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="9" [(value)]="letters[9]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="10" [(value)]="letters[10]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="11" [(value)]="letters[11]" ></td>
+      </tr>
+      <tr>
+        <td><input type="text" maxlength="1" class="form-control" id="12" [(value)]="letters[12]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="13" [(value)]="letters[13]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="14" [(value)]="letters[14]" ></td>
+        <td><input type="text" maxlength="1" class="form-control" id="15" [(value)]="letters[15]" ></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p *ngFor="let word of this.words">{{word}} </p>
+
+<input type="button" id="btnSubmit" class="btn btn-primary" value="Submit" (click)="this.submit()">
