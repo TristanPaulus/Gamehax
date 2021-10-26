@@ -64,6 +64,7 @@ export class WRModel{
                 matchModel.word.push(this.wordGrid[i].letter);
                 this.checkNeighboringLetters(i, searchingWord[1], 1, searchingWord, matchModel)
             }
+            this.clearIsUsedFields();
         }
     }
 
@@ -75,66 +76,74 @@ export class WRModel{
             return true;
         }
 
-        if(this.wordGrid[lastFoundIndex].NW != null)
+        if(this.wordGrid[lastFoundIndex].NW != null && this.wordGrid[this.wordGrid[lastFoundIndex].NW].isUsed == false)
             if(this.wordGrid[this.wordGrid[lastFoundIndex].NW].letter == searchingLetter)
             {
+                this.wordGrid[this.wordGrid[lastFoundIndex].NW].isUsed = true;
                 matchModel.route.push(this.wordGrid[lastFoundIndex].NW);
                 matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].NW].letter);
                 this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].NW, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
             }
 
-        if(this.wordGrid[lastFoundIndex].N != null)
+        if(this.wordGrid[lastFoundIndex].N != null && this.wordGrid[this.wordGrid[lastFoundIndex].N].isUsed == false)
             if(this.wordGrid[this.wordGrid[lastFoundIndex].N].letter == searchingLetter)
             {
+                this.wordGrid[this.wordGrid[lastFoundIndex].N].isUsed = true;
                 matchModel.route.push(this.wordGrid[lastFoundIndex].N);
                 matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].N].letter);
                 this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].N, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
             }
 
-        if(this.wordGrid[lastFoundIndex].NE != null)
+        if(this.wordGrid[lastFoundIndex].NE != null && this.wordGrid[this.wordGrid[lastFoundIndex].NE].isUsed == false)
             if(this.wordGrid[this.wordGrid[lastFoundIndex].NE].letter == searchingLetter)
             {
+                this.wordGrid[this.wordGrid[lastFoundIndex].NE].isUsed = true;
                 matchModel.route.push(this.wordGrid[lastFoundIndex].NE);
                 matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].NE].letter);
                 this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].NE, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
             }
         
-        if(this.wordGrid[lastFoundIndex].E != null)
+        if(this.wordGrid[lastFoundIndex].E != null && this.wordGrid[this.wordGrid[lastFoundIndex].E].isUsed == false)
             if(this.wordGrid[this.wordGrid[lastFoundIndex].E].letter == searchingLetter)
             {
+                this.wordGrid[this.wordGrid[lastFoundIndex].E].isUsed = true;
                 matchModel.route.push(this.wordGrid[lastFoundIndex].E);
                 matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].E].letter);
                 this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].E, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
             }
 
-        if(this.wordGrid[lastFoundIndex].SE != null)
+        if(this.wordGrid[lastFoundIndex].SE != null && this.wordGrid[this.wordGrid[lastFoundIndex].SE].isUsed == false)
             if(this.wordGrid[this.wordGrid[lastFoundIndex].SE].letter == searchingLetter)
             {
+                this.wordGrid[this.wordGrid[lastFoundIndex].SE].isUsed = true;
                 matchModel.route.push(this.wordGrid[lastFoundIndex].SE);
                 matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].SE].letter);
                 this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].SE, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
             }
 
-        if(this.wordGrid[lastFoundIndex].S != null)
+        if(this.wordGrid[lastFoundIndex].S != null && this.wordGrid[this.wordGrid[lastFoundIndex].S].isUsed == false)
             if(this.wordGrid[this.wordGrid[lastFoundIndex].S].letter == searchingLetter)
             {
+                this.wordGrid[this.wordGrid[lastFoundIndex].S].isUsed = true;
                 matchModel.route.push(this.wordGrid[lastFoundIndex].S);
                 matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].S].letter);
                 this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].S, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
             }
 
-        if(this.wordGrid[lastFoundIndex].SW != null)
+        if(this.wordGrid[lastFoundIndex].SW != null && this.wordGrid[this.wordGrid[lastFoundIndex].SW].isUsed == false)
             if(this.wordGrid[this.wordGrid[lastFoundIndex].SW].letter == searchingLetter)
             {
+                this.wordGrid[this.wordGrid[lastFoundIndex].SW].isUsed = true;
                 matchModel.route.push(this.wordGrid[lastFoundIndex].SW);
                 matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].SW].letter);
                 this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].SW, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
             }
 
-        if(this.wordGrid[lastFoundIndex].W != null)
+        if(this.wordGrid[lastFoundIndex].W != null && this.wordGrid[this.wordGrid[lastFoundIndex].W].isUsed == false)
             if(this.wordGrid[this.wordGrid[lastFoundIndex].W].letter == searchingLetter)
             {
                 matchModel.route.push(this.wordGrid[lastFoundIndex].W);
+                this.wordGrid[this.wordGrid[lastFoundIndex].W].isUsed = true;
                 matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].W].letter);
                 this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].W, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
             }
@@ -311,8 +320,8 @@ export class WRCellLogic{
                     grid.wordGrid[i].N = 3;
                     grid.wordGrid[i].NW = 2;
                     grid.wordGrid[i].W = 6;
-                    grid.wordGrid[i].SW = 9;
-                    grid.wordGrid[i].S = 10;
+                    grid.wordGrid[i].SW = 10;
+                    grid.wordGrid[i].S = 11;
                     //grid.wordGrid[i].SE = 11;
                     //grid.wordGrid[i].E = 7;
                     break;
