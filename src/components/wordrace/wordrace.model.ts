@@ -53,14 +53,7 @@ export class WRModel{
         for(let i = 0; i < this.validWords.length; i++){
             console.log(this.validWords[i].word.join("") + ", using route: " + this.validWords[i].route.toString());
 
-            //let duplChecker = this.validWords[i].route;
             let hasDuplicates = false;
-            //duplChecker.sort();
-            // for (let j = 0; j < duplChecker.length; j++) {
-            //     if (duplChecker[j] === duplChecker[j + 1]) {
-            //         hasDuplicates = true;
-            //     }
-            // }
             if(!hasDuplicates)
                 newValidWords.push(this.validWords[i])
         }
@@ -86,16 +79,12 @@ export class WRModel{
     }
 
     checkNeighboringLetters(lastFoundIndex:number, searchingLetter:string, searchingWordIndex:number, searchingWord:string, matchModel:MatchModel){
-        console.log(lastFoundIndex, searchingLetter, searchingWordIndex, searchingWord)
+        //console.log(lastFoundIndex, searchingLetter, searchingWordIndex, searchingWord)
         let flag = true;
-        console.log("Current word built: " + matchModel.word.join("") + "; searching for "+ searchingWord);
+        //console.log("Current word built: " + matchModel.word.join("") + "; searching for "+ searchingWord);
         if(matchModel.word.join("") == searchingWord){
-            //console.log(matchModel.word);
-            //matchModel.route.pop();
-            //matchModel.word.pop();
-            console.log("Searchword " + searchingWord +" found against grid" + matchModel.word + " route: " + matchModel.route)
+            console.log("Searchword " + searchingWord +" found against grid: " + matchModel.word + " route: " + matchModel.route)
             this.validWords.push(matchModel);
-            //console.log(matchModel);
             return true;
         }
 
@@ -114,14 +103,12 @@ export class WRModel{
             console.log(searchingLetter + " found at positions ", foundIndexes)
         else{
             console.log(searchingLetter + " not found surrounding position " + lastFoundIndex)
-            //this.wordGrid[foundIndexes[lastFoundIndex]].isUsed = false;
             matchModel.route.pop();
             matchModel.word.pop();
         }
 
         for(let index = 0; index < foundIndexes.length; index++){
             if(searchingLetter == this.wordGrid[foundIndexes[index]].letter){
-                //this.wordGrid[foundIndexes[index]].isUsed = true;
                 matchModel.route.push(foundIndexes[index]);
                 matchModel.word.push(searchingLetter);
                 console.log(searchingLetter + " found at position " + foundIndexes[index] + "; current route: " + matchModel.route);
@@ -131,80 +118,6 @@ export class WRModel{
             } 
         }
         return false;
-        // if(this.wordGrid[lastFoundIndex].NW != null && this.wordGrid[this.wordGrid[lastFoundIndex].NW].isUsed == false)
-        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].NW].letter == searchingLetter)
-        //     {
-        //         this.wordGrid[this.wordGrid[lastFoundIndex].NW].isUsed = true;
-        //         matchModel.route.push(this.wordGrid[lastFoundIndex].NW);
-        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].NW].letter);
-        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].NW, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-        //     }
-
-        // if(this.wordGrid[lastFoundIndex].N != null && this.wordGrid[this.wordGrid[lastFoundIndex].N].isUsed == false)
-        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].N].letter == searchingLetter)
-        //     {
-        //         this.wordGrid[this.wordGrid[lastFoundIndex].N].isUsed = true;
-        //         matchModel.route.push(this.wordGrid[lastFoundIndex].N);
-        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].N].letter);
-        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].N, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-        //     }
-
-        // if(this.wordGrid[lastFoundIndex].NE != null && this.wordGrid[this.wordGrid[lastFoundIndex].NE].isUsed == false)
-        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].NE].letter == searchingLetter)
-        //     {
-        //         this.wordGrid[this.wordGrid[lastFoundIndex].NE].isUsed = true;
-        //         matchModel.route.push(this.wordGrid[lastFoundIndex].NE);
-        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].NE].letter);
-        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].NE, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-        //     }
-        
-        // if(this.wordGrid[lastFoundIndex].E != null && this.wordGrid[this.wordGrid[lastFoundIndex].E].isUsed == false)
-        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].E].letter == searchingLetter)
-        //     {
-        //         this.wordGrid[this.wordGrid[lastFoundIndex].E].isUsed = true;
-        //         matchModel.route.push(this.wordGrid[lastFoundIndex].E);
-        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].E].letter);
-        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].E, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-        //     }
-
-        // if(this.wordGrid[lastFoundIndex].SE != null && this.wordGrid[this.wordGrid[lastFoundIndex].SE].isUsed == false)
-        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].SE].letter == searchingLetter)
-        //     {
-        //         this.wordGrid[this.wordGrid[lastFoundIndex].SE].isUsed = true;
-        //         matchModel.route.push(this.wordGrid[lastFoundIndex].SE);
-        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].SE].letter);
-        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].SE, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-        //     }
-
-        // if(this.wordGrid[lastFoundIndex].S != null && this.wordGrid[this.wordGrid[lastFoundIndex].S].isUsed == false)
-        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].S].letter == searchingLetter)
-        //     {
-        //         this.wordGrid[this.wordGrid[lastFoundIndex].S].isUsed = true;
-        //         matchModel.route.push(this.wordGrid[lastFoundIndex].S);
-        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].S].letter);
-        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].S, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-        //     }
-
-        // if(this.wordGrid[lastFoundIndex].SW != null && this.wordGrid[this.wordGrid[lastFoundIndex].SW].isUsed == false)
-        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].SW].letter == searchingLetter)
-        //     {
-        //         this.wordGrid[this.wordGrid[lastFoundIndex].SW].isUsed = true;
-        //         matchModel.route.push(this.wordGrid[lastFoundIndex].SW);
-        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].SW].letter);
-        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].SW, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-        //     }
-
-        // if(this.wordGrid[lastFoundIndex].W != null && this.wordGrid[this.wordGrid[lastFoundIndex].W].isUsed == false)
-        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].W].letter == searchingLetter)
-        //     {
-        //         matchModel.route.push(this.wordGrid[lastFoundIndex].W);
-        //         this.wordGrid[this.wordGrid[lastFoundIndex].W].isUsed = true;
-        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].W].letter);
-        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].W, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-        //     }
-        
-        //return flag;
-
     }
 
     scanSurroundings(lastFoundIndex:number, desiredLetter:string){
