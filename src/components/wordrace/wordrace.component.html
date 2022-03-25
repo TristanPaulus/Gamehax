@@ -36,6 +36,6 @@
   </table>
 </div>
 
-<p *ngFor="let word of this.words">{{word}} </p>
+<p *ngFor="let word of this.words">{{word.word}} </p>
 
-<input type="button" id="btnSubmit" class="btn btn-primary" value="Submit" (click)="this.submit()">
+<input type="button" id="btnSubmit" class="btn btn-primary" value="Find Words" (click)="this.submit()">

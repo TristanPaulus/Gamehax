@@ -41,6 +41,9 @@ export class WRModel{
     }
 
     findWords(apiWordList: string){
+
+        let newValidWords:MatchModel[] = [];
+
         for(let i = 0; i < apiWordList.length; i++){
             //Call a function for each word
             if(apiWordList[i].length > 2)
@@ -49,7 +52,20 @@ export class WRModel{
         
         for(let i = 0; i < this.validWords.length; i++){
             console.log(this.validWords[i].word.join("") + ", using route: " + this.validWords[i].route.toString());
+
+            let duplChecker = this.validWords[i].route;
+            let hasDuplicates = false;
+            duplChecker.sort();
+            // for (let j = 0; j < duplChecker.length; j++) {
+            //     if (duplChecker[j] === duplChecker[j + 1]) {
+            //         hasDuplicates = true;
+            //     }
+            // }
+            if(!hasDuplicates)
+                newValidWords.push(this.validWords[i])
         }
+
+        return newValidWords;
     }
 
     checkWord(searchingWord:string){
@@ -62,7 +78,7 @@ export class WRModel{
             {
                 matchModel.route.push(i);
                 matchModel.word.push(this.wordGrid[i].letter);
-                this.checkNeighboringLetters(i, searchingWord[1], 1, searchingWord, matchModel)
+                this.checkNeighboringLetters(i, searchingWord[1], 1, searchingWord, matchModel);
             }
             this.clearIsUsedFields();
         }

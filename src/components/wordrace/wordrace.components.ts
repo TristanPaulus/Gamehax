@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WRModel, WRCellModel, WRCellLogic } from './wordrace.model';
+import { WRModel, WRCellModel, WRCellLogic, MatchModel } from './wordrace.model';
 import { WordRaceService } from './wordrace.service';
 import * as $ from "jquery";
 
@@ -15,7 +15,7 @@ export class WordraceComponent {
   letters :string[];
   letterCount:number = 16;
   queryString: string;
-  words: string[];
+  words: MatchModel[];
   validWords: string[];
 
 constructor(){
@@ -29,7 +29,8 @@ constructor(){
       this.letters[i] = " ";
     }
     this.queryString ='';
-    document.getElementById('0').focus()
+    document.getElementById('0').setAttribute("value", null);
+    document.getElementById('0').focus();
 
   }
 
@@ -44,7 +45,10 @@ constructor(){
       //this.letters[i] = $("#"+i).val().toString();
       this.queryString+= this.letters[i];
     }
-    this.getWords(this.queryString);
+    this.words = this.getWords(this.queryString);
+    console.log("Words:");
+    console.log(this.words);
+    this.words
   }
 
   public findLinkedLetters(){
@@ -53,7 +57,8 @@ constructor(){
 
   
 
-  public getWords(input: string){
+  public getWords(input: string) : MatchModel[] {
+    let validWords = [];
       $.ajax({
         async: false,
         type: "GET",
@@ -66,20 +71,19 @@ constructor(){
     
             let grid:WRModel = logic.createGrid(input.split(""));
 
-            let found = grid.findWords(this.words);
+            validWords = grid.findWords(this.words);
 
             console.log("Results:");
-            console.log(grid);
-            //console.log(this.words);
+            console.log(validWords);
+
+            return validWords;
         },
         error: function (xhr, status, error) {
-          
         },
         complete: function (response) {
-          
         }
     });
-
+    return validWords;
     
   }
 
