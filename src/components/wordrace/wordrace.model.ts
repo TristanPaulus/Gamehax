@@ -53,9 +53,9 @@ export class WRModel{
         for(let i = 0; i < this.validWords.length; i++){
             console.log(this.validWords[i].word.join("") + ", using route: " + this.validWords[i].route.toString());
 
-            let duplChecker = this.validWords[i].route;
+            //let duplChecker = this.validWords[i].route;
             let hasDuplicates = false;
-            duplChecker.sort();
+            //duplChecker.sort();
             // for (let j = 0; j < duplChecker.length; j++) {
             //     if (duplChecker[j] === duplChecker[j + 1]) {
             //         hasDuplicates = true;
@@ -70,7 +70,7 @@ export class WRModel{
 
     checkWord(searchingWord:string){
         let firstLetter = searchingWord.split("")[0];
-
+        console.log("Looking if "+ searchingWord + " is in the grid");
         for(let i = 0; i < this.wordGrid.length; i++){
             let matchModel = new MatchModel();
            
@@ -78,6 +78,7 @@ export class WRModel{
             {
                 matchModel.route.push(i);
                 matchModel.word.push(this.wordGrid[i].letter);
+                console.log("First letter " + searchingWord[0] +" found at position " + i)
                 this.checkNeighboringLetters(i, searchingWord[1], 1, searchingWord, matchModel);
             }
             this.clearIsUsedFields();
@@ -85,171 +86,153 @@ export class WRModel{
     }
 
     checkNeighboringLetters(lastFoundIndex:number, searchingLetter:string, searchingWordIndex:number, searchingWord:string, matchModel:MatchModel){
-
+        console.log(lastFoundIndex, searchingLetter, searchingWordIndex, searchingWord)
+        let flag = true;
+        console.log("Current word built: " + matchModel.word.join("") + "; searching for "+ searchingWord);
         if(matchModel.word.join("") == searchingWord){
+            //console.log(matchModel.word);
+            //matchModel.route.pop();
+            //matchModel.word.pop();
+            console.log("Searchword " + searchingWord +" found against grid" + matchModel.word + " route: " + matchModel.route)
             this.validWords.push(matchModel);
             //console.log(matchModel);
             return true;
         }
 
-        if(this.wordGrid[lastFoundIndex].NW != null && this.wordGrid[this.wordGrid[lastFoundIndex].NW].isUsed == false)
-            if(this.wordGrid[this.wordGrid[lastFoundIndex].NW].letter == searchingLetter)
-            {
-                this.wordGrid[this.wordGrid[lastFoundIndex].NW].isUsed = true;
-                matchModel.route.push(this.wordGrid[lastFoundIndex].NW);
-                matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].NW].letter);
-                this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].NW, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-            }
+        let foundIndexes = this.scanSurroundings(lastFoundIndex, searchingLetter);
+        if(foundIndexes.length > 0)
+            console.log(searchingLetter + " found at positions ", foundIndexes)
 
-        if(this.wordGrid[lastFoundIndex].N != null && this.wordGrid[this.wordGrid[lastFoundIndex].N].isUsed == false)
-            if(this.wordGrid[this.wordGrid[lastFoundIndex].N].letter == searchingLetter)
-            {
-                this.wordGrid[this.wordGrid[lastFoundIndex].N].isUsed = true;
-                matchModel.route.push(this.wordGrid[lastFoundIndex].N);
-                matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].N].letter);
-                this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].N, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-            }
-
-        if(this.wordGrid[lastFoundIndex].NE != null && this.wordGrid[this.wordGrid[lastFoundIndex].NE].isUsed == false)
-            if(this.wordGrid[this.wordGrid[lastFoundIndex].NE].letter == searchingLetter)
-            {
-                this.wordGrid[this.wordGrid[lastFoundIndex].NE].isUsed = true;
-                matchModel.route.push(this.wordGrid[lastFoundIndex].NE);
-                matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].NE].letter);
-                this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].NE, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-            }
-        
-        if(this.wordGrid[lastFoundIndex].E != null && this.wordGrid[this.wordGrid[lastFoundIndex].E].isUsed == false)
-            if(this.wordGrid[this.wordGrid[lastFoundIndex].E].letter == searchingLetter)
-            {
-                this.wordGrid[this.wordGrid[lastFoundIndex].E].isUsed = true;
-                matchModel.route.push(this.wordGrid[lastFoundIndex].E);
-                matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].E].letter);
-                this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].E, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-            }
-
-        if(this.wordGrid[lastFoundIndex].SE != null && this.wordGrid[this.wordGrid[lastFoundIndex].SE].isUsed == false)
-            if(this.wordGrid[this.wordGrid[lastFoundIndex].SE].letter == searchingLetter)
-            {
-                this.wordGrid[this.wordGrid[lastFoundIndex].SE].isUsed = true;
-                matchModel.route.push(this.wordGrid[lastFoundIndex].SE);
-                matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].SE].letter);
-                this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].SE, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-            }
-
-        if(this.wordGrid[lastFoundIndex].S != null && this.wordGrid[this.wordGrid[lastFoundIndex].S].isUsed == false)
-            if(this.wordGrid[this.wordGrid[lastFoundIndex].S].letter == searchingLetter)
-            {
-                this.wordGrid[this.wordGrid[lastFoundIndex].S].isUsed = true;
-                matchModel.route.push(this.wordGrid[lastFoundIndex].S);
-                matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].S].letter);
-                this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].S, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-            }
-
-        if(this.wordGrid[lastFoundIndex].SW != null && this.wordGrid[this.wordGrid[lastFoundIndex].SW].isUsed == false)
-            if(this.wordGrid[this.wordGrid[lastFoundIndex].SW].letter == searchingLetter)
-            {
-                this.wordGrid[this.wordGrid[lastFoundIndex].SW].isUsed = true;
-                matchModel.route.push(this.wordGrid[lastFoundIndex].SW);
-                matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].SW].letter);
-                this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].SW, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-            }
-
-        if(this.wordGrid[lastFoundIndex].W != null && this.wordGrid[this.wordGrid[lastFoundIndex].W].isUsed == false)
-            if(this.wordGrid[this.wordGrid[lastFoundIndex].W].letter == searchingLetter)
-            {
-                matchModel.route.push(this.wordGrid[lastFoundIndex].W);
-                this.wordGrid[this.wordGrid[lastFoundIndex].W].isUsed = true;
-                matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].W].letter);
-                this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].W, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
-            }
-        
-        return false;
-
-    }
-
-    findWord(word : string){
-        let flag = false;
-        let splitWord = word.split('');
-
-        if(word.length < 3)
-        return false;
-
-        for(let i = 0; i < splitWord.length; i++){
-            for(let j = 0; j < this.wordGrid.length; j++){
-
-                if(this.wordGrid[j].letter == splitWord[i]){
-                    flag = this.checkLinks(i+1, j, this.wordGrid[j].letter, splitWord);
-                }
-
+        for(let index = 0; index < foundIndexes.length; index++){
+            if(searchingLetter == this.wordGrid[foundIndexes[index]].letter){
+                this.wordGrid[foundIndexes[index]].isUsed = true;
+                matchModel.route.push(foundIndexes[index]);
+                matchModel.word.push(searchingLetter);
+                console.log(searchingLetter + " found at position " + foundIndexes[index] + "; current route: " + matchModel.route);
+                flag = this.checkNeighboringLetters(foundIndexes[index], searchingWord[matchModel.route.length], matchModel.route.length, searchingWord, matchModel);
                 if(flag)
                     return true;
+            } else{
+                console.log(searchingLetter + " not found surrounding position " + lastFoundIndex)
+                this.wordGrid[foundIndexes[index]].isUsed = false;
+                matchModel.route.pop();
+                matchModel.word.pop();
             }
-            // if(flag)
-            //     return false;
         }
-
         return false;
+        // if(this.wordGrid[lastFoundIndex].NW != null && this.wordGrid[this.wordGrid[lastFoundIndex].NW].isUsed == false)
+        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].NW].letter == searchingLetter)
+        //     {
+        //         this.wordGrid[this.wordGrid[lastFoundIndex].NW].isUsed = true;
+        //         matchModel.route.push(this.wordGrid[lastFoundIndex].NW);
+        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].NW].letter);
+        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].NW, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
+        //     }
+
+        // if(this.wordGrid[lastFoundIndex].N != null && this.wordGrid[this.wordGrid[lastFoundIndex].N].isUsed == false)
+        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].N].letter == searchingLetter)
+        //     {
+        //         this.wordGrid[this.wordGrid[lastFoundIndex].N].isUsed = true;
+        //         matchModel.route.push(this.wordGrid[lastFoundIndex].N);
+        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].N].letter);
+        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].N, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
+        //     }
+
+        // if(this.wordGrid[lastFoundIndex].NE != null && this.wordGrid[this.wordGrid[lastFoundIndex].NE].isUsed == false)
+        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].NE].letter == searchingLetter)
+        //     {
+        //         this.wordGrid[this.wordGrid[lastFoundIndex].NE].isUsed = true;
+        //         matchModel.route.push(this.wordGrid[lastFoundIndex].NE);
+        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].NE].letter);
+        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].NE, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
+        //     }
+        
+        // if(this.wordGrid[lastFoundIndex].E != null && this.wordGrid[this.wordGrid[lastFoundIndex].E].isUsed == false)
+        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].E].letter == searchingLetter)
+        //     {
+        //         this.wordGrid[this.wordGrid[lastFoundIndex].E].isUsed = true;
+        //         matchModel.route.push(this.wordGrid[lastFoundIndex].E);
+        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].E].letter);
+        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].E, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
+        //     }
+
+        // if(this.wordGrid[lastFoundIndex].SE != null && this.wordGrid[this.wordGrid[lastFoundIndex].SE].isUsed == false)
+        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].SE].letter == searchingLetter)
+        //     {
+        //         this.wordGrid[this.wordGrid[lastFoundIndex].SE].isUsed = true;
+        //         matchModel.route.push(this.wordGrid[lastFoundIndex].SE);
+        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].SE].letter);
+        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].SE, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
+        //     }
+
+        // if(this.wordGrid[lastFoundIndex].S != null && this.wordGrid[this.wordGrid[lastFoundIndex].S].isUsed == false)
+        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].S].letter == searchingLetter)
+        //     {
+        //         this.wordGrid[this.wordGrid[lastFoundIndex].S].isUsed = true;
+        //         matchModel.route.push(this.wordGrid[lastFoundIndex].S);
+        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].S].letter);
+        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].S, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
+        //     }
+
+        // if(this.wordGrid[lastFoundIndex].SW != null && this.wordGrid[this.wordGrid[lastFoundIndex].SW].isUsed == false)
+        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].SW].letter == searchingLetter)
+        //     {
+        //         this.wordGrid[this.wordGrid[lastFoundIndex].SW].isUsed = true;
+        //         matchModel.route.push(this.wordGrid[lastFoundIndex].SW);
+        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].SW].letter);
+        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].SW, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
+        //     }
+
+        // if(this.wordGrid[lastFoundIndex].W != null && this.wordGrid[this.wordGrid[lastFoundIndex].W].isUsed == false)
+        //     if(this.wordGrid[this.wordGrid[lastFoundIndex].W].letter == searchingLetter)
+        //     {
+        //         matchModel.route.push(this.wordGrid[lastFoundIndex].W);
+        //         this.wordGrid[this.wordGrid[lastFoundIndex].W].isUsed = true;
+        //         matchModel.word.push(this.wordGrid[this.wordGrid[lastFoundIndex].W].letter);
+        //         flag = this.checkNeighboringLetters(this.wordGrid[lastFoundIndex].W, searchingWord[searchingWordIndex+1], searchingWordIndex+1, searchingWord, matchModel);
+        //     }
+        
+        //return flag;
+
     }
 
-    checkLinks(i:number, j:number, inputLetter:string, wordToFind: string[]){
-        if(i == wordToFind.length){
-            //this.validWords.push(wordToFind.join(""));
-            this.clearIsUsedFields();
-            console.log(wordToFind.join(""))
-            return true;
-        }
+    scanSurroundings(lastFoundIndex:number, desiredLetter:string){
+        let foundIndexes = [];
 
-        if(this.wordGrid[j].NW)
-            if(this.wordGrid[this.wordGrid[j].NW].letter == wordToFind[i])
-            {
-                this.checkLinks(i+1, this.wordGrid[j].NW, this.wordGrid[this.wordGrid[j].NW].letter, wordToFind)
-            }
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].NE] != null)
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].NE].letter == desiredLetter && this.wordGrid[this.wordGrid[lastFoundIndex].NE].isUsed != true )
+            foundIndexes.push(this.wordGrid[lastFoundIndex].NE);
 
-        if(this.wordGrid[j].N)
-            if(this.wordGrid[this.wordGrid[j].N].letter == wordToFind[i])
-            {
-                this.checkLinks(i+1, this.wordGrid[j].N, this.wordGrid[this.wordGrid[j].N].letter, wordToFind)
-            }
-        if(this.wordGrid[j].NE)
-            if(this.wordGrid[this.wordGrid[j].NE].letter == wordToFind[i])
-            {
-                this.checkLinks(i+1, this.wordGrid[j].NE, this.wordGrid[this.wordGrid[j].NE].letter, wordToFind)
-            }
-        if(this.wordGrid[j].E)
-            if(this.wordGrid[this.wordGrid[j].E].letter == wordToFind[i])
-            {
-                this.checkLinks(i+1, this.wordGrid[j].E, this.wordGrid[this.wordGrid[j].E].letter, wordToFind)
-            }
-        
-        if(this.wordGrid[j].SE)
-            if(this.wordGrid[this.wordGrid[j].SE].letter == wordToFind[i])
-            {
-                this.checkLinks(i+1, this.wordGrid[j].SE, this.wordGrid[this.wordGrid[j].SE].letter, wordToFind)
-            }
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].N] != null)
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].N].letter == desiredLetter && this.wordGrid[this.wordGrid[lastFoundIndex].N].isUsed != true )
+            foundIndexes.push(this.wordGrid[lastFoundIndex].N);
 
-        if(this.wordGrid[j].S)
-            if(this.wordGrid[this.wordGrid[j].S].letter == wordToFind[i])
-            {
-                this.checkLinks(i+1, this.wordGrid[j].S, this.wordGrid[this.wordGrid[j].S].letter, wordToFind)
-            }
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].NW] != null)
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].NW].letter == desiredLetter && this.wordGrid[this.wordGrid[lastFoundIndex].NW].isUsed != true )
+            foundIndexes.push(this.wordGrid[lastFoundIndex].NW);
 
-        if(this.wordGrid[j].SW)
-            if(this.wordGrid[this.wordGrid[j].SW].letter == wordToFind[i])
-            {
-                this.checkLinks(i+1, this.wordGrid[j].SW, this.wordGrid[this.wordGrid[j].SW].letter, wordToFind)
-            }
-        
-        if(this.wordGrid[j].W)
-            if(this.wordGrid[this.wordGrid[j].W].letter == wordToFind[i])
-            {
-                this.checkLinks(i+1, this.wordGrid[j].W, this.wordGrid[this.wordGrid[j].W].letter, wordToFind)
-            }
-       
-        this.clearIsUsedFields();
-        return false;
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].W] != null)
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].W].letter == desiredLetter && this.wordGrid[this.wordGrid[lastFoundIndex].W].isUsed != true )
+            foundIndexes.push(this.wordGrid[lastFoundIndex].W);
+
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].SW] != null)
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].SW].letter == desiredLetter && this.wordGrid[this.wordGrid[lastFoundIndex].SW].isUsed != true )
+            foundIndexes.push(this.wordGrid[lastFoundIndex].SW);
+
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].S] != null)
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].S].letter == desiredLetter && this.wordGrid[this.wordGrid[lastFoundIndex].S].isUsed != true )
+            foundIndexes.push(this.wordGrid[lastFoundIndex].S);
+
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].SE] != null)
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].SE].letter == desiredLetter && this.wordGrid[this.wordGrid[lastFoundIndex].SE].isUsed != true )
+            foundIndexes.push(this.wordGrid[lastFoundIndex].SE);
+
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].E] != null)
+        if(this.wordGrid[this.wordGrid[lastFoundIndex].E].letter == desiredLetter && this.wordGrid[this.wordGrid[lastFoundIndex].E].isUsed != true )
+            foundIndexes.push(this.wordGrid[lastFoundIndex].E);
+
+        return foundIndexes;
     }
-
 
     clearIsUsedFields(){
         for(let j = 0; j < this.wordGrid.length; j++){
