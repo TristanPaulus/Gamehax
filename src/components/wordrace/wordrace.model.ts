@@ -100,24 +100,35 @@ export class WRModel{
         }
 
         let foundIndexes = this.scanSurroundings(lastFoundIndex, searchingLetter);
+
+        for(let k = 0; k < matchModel.route.length; k++){
+            let routeValue = matchModel.route[k];
+            let removeIndex = foundIndexes.indexOf(routeValue)
+            if (removeIndex > -1) {
+                foundIndexes.splice(removeIndex, 1); 
+            }
+        }
+        
+
         if(foundIndexes.length > 0)
             console.log(searchingLetter + " found at positions ", foundIndexes)
+        else{
+            console.log(searchingLetter + " not found surrounding position " + lastFoundIndex)
+            //this.wordGrid[foundIndexes[lastFoundIndex]].isUsed = false;
+            matchModel.route.pop();
+            matchModel.word.pop();
+        }
 
         for(let index = 0; index < foundIndexes.length; index++){
             if(searchingLetter == this.wordGrid[foundIndexes[index]].letter){
-                this.wordGrid[foundIndexes[index]].isUsed = true;
+                //this.wordGrid[foundIndexes[index]].isUsed = true;
                 matchModel.route.push(foundIndexes[index]);
                 matchModel.word.push(searchingLetter);
                 console.log(searchingLetter + " found at position " + foundIndexes[index] + "; current route: " + matchModel.route);
                 flag = this.checkNeighboringLetters(foundIndexes[index], searchingWord[matchModel.route.length], matchModel.route.length, searchingWord, matchModel);
                 if(flag)
                     return true;
-            } else{
-                console.log(searchingLetter + " not found surrounding position " + lastFoundIndex)
-                this.wordGrid[foundIndexes[index]].isUsed = false;
-                matchModel.route.pop();
-                matchModel.word.pop();
-            }
+            } 
         }
         return false;
         // if(this.wordGrid[lastFoundIndex].NW != null && this.wordGrid[this.wordGrid[lastFoundIndex].NW].isUsed == false)
