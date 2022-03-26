@@ -25,6 +25,7 @@ export class WRCellModel{
 export class MatchModel{
     word:string[];
     route:number[];
+    displayString:string;
     constructor() {
         
         this.word = [];
@@ -85,6 +86,7 @@ export class WRModel{
         if(matchModel.word.join("") == searchingWord){
             console.log("Searchword " + searchingWord +" found against grid: " + matchModel.word + " route: " + matchModel.route)
             this.validWords.push(matchModel);
+            matchModel.displayString = matchModel.word.join("").toUpperCase();
             return true;
         }
 
