@@ -2,40 +2,49 @@
 <br/>
 <br/>
 <br/>
-<p>WordRace</p>
+<p>This was designed to find words as quickly as possible inside a 4x4 grid.</p>
+<p>The only rule is that the letters of the word need to be adjacent to each other (diagonals included) and do not get used more than once for a word.</p>
 
 
 <div style="align-items: center;">
 <table class="table" style="width:80%;text-align:center;max-width:450px;">
     <tbody>
       <tr>
-        <td><input type="text" maxlength="1" class="form-control" id="0" [(value)]="this.letters[0]"></td>
-        <td><input type="text" maxlength="1" class="form-control" id="1" [(value)]="this.letters[1]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="2" [(value)]="this.letters[2]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="3" [(value)]="this.letters[3]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 0)" class="form-control" id="0" [(value)]="this.letters[0]"></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 1)" class="form-control" id="1" [(value)]="this.letters[1]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 2)" class="form-control" id="2" [(value)]="this.letters[2]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 3)" class="form-control" id="3" [(value)]="this.letters[3]" ></td>
       </tr>
       <tr>
-        <td><input type="text" maxlength="1" class="form-control" id="4" [(value)]="letters[4]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="5" [(value)]="letters[5]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="6" [(value)]="letters[6]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="7" [(value)]="letters[7]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 4)" class="form-control" id="4" [(value)]="letters[4]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 5)" class="form-control" id="5" [(value)]="letters[5]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 6)" class="form-control" id="6" [(value)]="letters[6]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 7)" class="form-control" id="7" [(value)]="letters[7]" ></td>
       </tr>
       <tr>
-        <td><input type="text" maxlength="1" class="form-control" id="8" [(value)]="letters[8]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="9" [(value)]="letters[9]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="10" [(value)]="letters[10]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="11" [(value)]="letters[11]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 8)" class="form-control" id="8" [(value)]="letters[8]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 9)" class="form-control" id="9" [(value)]="letters[9]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 10)" class="form-control" id="10" [(value)]="letters[10]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 11)" class="form-control" id="11" [(value)]="letters[11]" ></td>
       </tr>
       <tr>
-        <td><input type="text" maxlength="1" class="form-control" id="12" [(value)]="letters[12]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="13" [(value)]="letters[13]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="14" [(value)]="letters[14]" ></td>
-        <td><input type="text" maxlength="1" class="form-control" id="15" [(value)]="letters[15]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 12)" class="form-control" id="12" [(value)]="letters[12]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 13)" class="form-control" id="13" [(value)]="letters[13]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 14)" class="form-control" id="14" [(value)]="letters[14]" ></td>
+        <td><input type="text" maxlength="1" (keyup)="enterValue($event, 15)" class="form-control" id="15" [(value)]="letters[15]" ></td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<p *ngFor="let word of this.words">{{word.word}} </p>
 
-<input type="button" id="btnSubmit" class="btn btn-primary" value="Find Words" (click)="this.submit()">
+<p *ngIf="this.words">Click word to highlight on grid</p>
+<div *ngIf="this.words" style="overflow:scroll; height:400px;"> 
+  <div class="col-3" *ngFor="let word of this.words">
+      <button (click)="highlightOnGrid(word)" attr.data-value="{{word.route}}" class="btn btn-primary showOnGridBtn" >{{word.displayString}} </button>
+  </div>
+</div>
+<!-- <p *ngFor="let word of this.words">{{word.word}} </p> -->
+
+<input type="button" id="btnSubmit" class="btn btn-primary toggle" value="Find Words" (click)="this.submit()">
+<!-- <input type="button" id="btnLoading" class="btn btn-primary toggle" value="Loading" disabled style="display:none"> -->
