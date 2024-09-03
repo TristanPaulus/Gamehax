@@ -1,4 +1,5 @@
 
+<div style="display: block;text-align: center;margin-left: auto;margin-right: auto;">
 <br/>
 <br/>
 <br/>
@@ -6,8 +7,7 @@
 <p>The only rule is that the letters of the word need to be adjacent to each other (diagonals included) and do not get used more than once for a word.</p>
 
 
-<div style="align-items: center;">
-<table class="table" style="width:80%;text-align:center;max-width:450px;">
+<table class="table" style="width:80%;text-align:center;max-width:450px;margin-left: auto;margin-right: auto;">
     <tbody>
       <tr>
         <td><input type="text" maxlength="1" (keyup)="enterValue($event, 0)" class="form-control" id="0" [(value)]="this.letters[0]"></td>
@@ -35,16 +35,21 @@
       </tr>
     </tbody>
   </table>
-</div>
-
-
-<p *ngIf="this.words">Click word to highlight on grid</p>
-<div *ngIf="this.words" style="overflow:scroll; height:400px;"> 
-  <div class="col-3" *ngFor="let word of this.words">
-      <button (click)="highlightOnGrid(word)" attr.data-value="{{word.route}}" class="btn btn-primary showOnGridBtn" >{{word.displayString}} </button>
-  </div>
-</div>
-<!-- <p *ngFor="let word of this.words">{{word.word}} </p> -->
+  <p *ngIf="this.words">Click word to highlight on grid</p>
 
 <input type="button" id="btnSubmit" class="btn btn-primary toggle" value="Find Words" (click)="this.submit()">
+
+
+<div class="colspan-12" *ngIf="this.words" style="overflow:scroll; height:400px;"> 
+  <span class="colspan-3" *ngFor="let word of this.words">
+      <button (click)="highlightOnGrid(word)" attr.data-value="{{word.route}}" class="btn btn-secondary showOnGridBtn" >{{word.displayString}} </button>
+  </span>
+</div>
+</div>
+
+
+
+<!-- <p *ngFor="let word of this.words">{{word.word}} </p> -->
+
+
 <!-- <input type="button" id="btnLoading" class="btn btn-primary toggle" value="Loading" disabled style="display:none"> -->

@@ -99,12 +99,16 @@ constructor(){
 
   public enterValue(event, fieldId){
     //console.log(event.key, fieldId)
-    this.letters[fieldId] = event.key.toUpperCase(); 
+    const regex = /[a-zA-Z]/;
+    if(!regex.test(event.key) || event.key.length > 1)
+      event.preventDefault()
+    else{
+      this.letters[fieldId] = event.key.toUpperCase(); 
     //document.getElementById(fieldId).setAttribute("value", event.key);
-    if(fieldId < 15)
-      fieldId += 1;
-    document.getElementById(fieldId).focus();
-
+      if(fieldId < 15)
+        fieldId += 1;
+      document.getElementById(fieldId).focus();
+    }
   }
 
 }
