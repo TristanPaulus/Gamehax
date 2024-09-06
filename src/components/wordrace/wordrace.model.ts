@@ -52,7 +52,7 @@ export class WRModel{
         }
         
         for(let i = 0; i < this.validWords.length; i++){
-            console.log(this.validWords[i].word.join("") + ", using route: " + this.validWords[i].route.toString());
+            //console.log(this.validWords[i].word.join("") + ", using route: " + this.validWords[i].route.toString());
 
             let hasDuplicates = false;
             if(!hasDuplicates)
@@ -64,7 +64,7 @@ export class WRModel{
 
     checkWord(searchingWord:string){
         let firstLetter = searchingWord.split("")[0];
-        console.log("Looking if "+ searchingWord + " is in the grid");
+        //console.log("Looking if "+ searchingWord + " is in the grid");
         for(let i = 0; i < this.wordGrid.length; i++){
             let matchModel = new MatchModel();
            
@@ -72,7 +72,7 @@ export class WRModel{
             {
                 matchModel.route.push(i);
                 matchModel.word.push(this.wordGrid[i].letter);
-                console.log("First letter " + searchingWord[0] +" found at position " + i)
+                //console.log("First letter " + searchingWord[0] +" found at position " + i)
                 this.checkNeighboringLetters(i, searchingWord[1], 1, searchingWord, matchModel);
             }
             this.clearIsUsedFields();
@@ -84,7 +84,7 @@ export class WRModel{
         let flag = true;
         //console.log("Current word built: " + matchModel.word.join("") + "; searching for "+ searchingWord);
         if(matchModel.word.join("") == searchingWord){
-            console.log("Searchword " + searchingWord +" found against grid: " + matchModel.word + " route: " + matchModel.route)
+            //console.log("Searchword " + searchingWord +" found against grid: " + matchModel.word + " route: " + matchModel.route)
             this.validWords.push(matchModel);
             matchModel.displayString = matchModel.word.join("").toUpperCase();
             return true;
@@ -102,9 +102,9 @@ export class WRModel{
         
 
         if(foundIndexes.length > 0)
-            console.log(searchingLetter + " found at positions ", foundIndexes)
+            console.debug(searchingLetter + " found at positions ", foundIndexes)
         else{
-            console.log(searchingLetter + " not found surrounding position " + lastFoundIndex)
+            //console.log(searchingLetter + " not found surrounding position " + lastFoundIndex)
             matchModel.route.pop();
             matchModel.word.pop();
         }
@@ -113,7 +113,7 @@ export class WRModel{
             if(searchingLetter == this.wordGrid[foundIndexes[index]].letter){
                 matchModel.route.push(foundIndexes[index]);
                 matchModel.word.push(searchingLetter);
-                console.log(searchingLetter + " found at position " + foundIndexes[index] + "; current route: " + matchModel.route);
+                //console.log(searchingLetter + " found at position " + foundIndexes[index] + "; current route: " + matchModel.route);
                 flag = this.checkNeighboringLetters(foundIndexes[index], searchingWord[matchModel.route.length], matchModel.route.length, searchingWord, matchModel);
                 if(flag)
                     return true;

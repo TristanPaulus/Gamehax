@@ -36,7 +36,7 @@ constructor(){
   }
 
   nextField(event){
-    console.log(event);
+    //console.log(event);
   }
 
   public submit(){
@@ -54,13 +54,15 @@ constructor(){
 
 
   public highlightOnGrid(wordMatchModel){
-    console.log(event);
+    //console.log(event);
     for(let i =0; i < 16; i++){
       document.getElementById(i.toString()).setAttribute("style", "background-color:white");
     }
 
     for(let i =0; i < wordMatchModel.route.length; i++){
-      document.getElementById(wordMatchModel.route[i].toString()).setAttribute("style", "background-color:lime");
+      setTimeout(()=>{
+        document.getElementById(wordMatchModel.route[i].toString()).setAttribute("style", "background-color:#a2ffa2; scale:1.10");
+      }, 120*i)
     }
   }
 

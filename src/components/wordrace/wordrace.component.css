@@ -1,6 +1,9 @@
 .form-control{
-    min-width: 100%;
+    /* min-width: 100%; */
     margin: 0px 0px 0px 0px;
+    transition: background-color 0.3s ease, scale 0.3s ease;
+    text-align: center;
+    max-width: fit-content;
 }
 
 input{
@@ -8,5 +11,15 @@ input{
 }
 
 .btn-secondary{
-    margin: 2px
+    margin: 2px;
+    background-color: rgb(152, 152, 152);
+}
+
+.btn-primary{
+    background-color: black;
+    border-color: lightgrey;
+}
+
+.btn:focus:hover{
+    border-color: lightgrey;
 }
